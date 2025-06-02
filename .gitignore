@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.DS_Store
+apm-backups/
+*.lck
+fp-info-cache
+.pio
+.browse.c_cpp.db*
+c_cpp_properties.json
+launch.json
+ipch
