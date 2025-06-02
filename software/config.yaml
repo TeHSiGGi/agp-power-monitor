@@ -1,0 +1,15 @@
+serial:
+  # Serial port configuration
+  port: /dev/ttyACM0
+  baudrate: 115200
+  # Timeout in seconds
+  timeout: 1.0
+measurement:
+  # Update interval for UI values in milliseconds
+  uiUpdateInterval: 100
+  # Factor to adjust current readings
+  currentCorrectionFactor: 1.0275
+  # Maximum buffer size in megabytes
+  maxBufferSizeMB: 100.0
+# Logging configuration
+debugLog: false

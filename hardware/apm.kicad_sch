@@ -1,0 +1,182 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "b5e3aa4a-ffed-46bb-b303-d214bf8490ca")
+	(paper "A3")
+	(lib_symbols)
+	(sheet
+		(at 353.06 22.86)
+		(size 39.37 11.43)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "0d58b1db-1d47-4a2c-8620-e7c6c3e8f781")
+		(property "Sheetname" "agp_connectors"
+			(at 353.06 22.1484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "agp_connectors.kicad_sch"
+			(at 353.06 34.8746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "apm"
+				(path "/b5e3aa4a-ffed-46bb-b303-d214bf8490ca"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 353.06 40.64)
+		(size 39.37 10.16)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "19c146e1-8334-4955-a879-b5bfee25a864")
+		(property "Sheetname" "external_power"
+			(at 353.06 39.9284 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "external_power.kicad_sch"
+			(at 353.06 51.3846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "apm"
+				(path "/b5e3aa4a-ffed-46bb-b303-d214bf8490ca"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 353.06 57.15)
+		(size 39.37 10.16)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "71298c2f-3184-41ab-b7ac-35ffa75dca74")
+		(property "Sheetname" "sensors"
+			(at 353.06 56.4384 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "sensors.kicad_sch"
+			(at 353.06 67.8946 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "apm"
+				(path "/b5e3aa4a-ffed-46bb-b303-d214bf8490ca"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 353.06 72.39)
+		(size 39.37 10.16)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "ff7dee63-7aa8-4626-b023-100f67575a87")
+		(property "Sheetname" "usb_interface"
+			(at 353.06 71.6784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "usb_interface.kicad_sch"
+			(at 353.06 83.1346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "apm"
+				(path "/b5e3aa4a-ffed-46bb-b303-d214bf8490ca"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
