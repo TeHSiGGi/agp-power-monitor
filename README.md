@@ -12,9 +12,6 @@ At the heart of APM is a custom AGP Riser card which consists mainly of an STM32
 
 It measures the voltages and currents of the AGP slot as well as of external power providers. Additionally there are two alternative inputs which can be used to measure any user-chosen external power rail as long as it is withing specification.
 
-![APM front](./pictures/apm_front.jpg)
-![APM back](./pictures/apm_back.jpg)
-
 ### Power Rails
 
 The following power rails are being measured by the APM.
@@ -65,8 +62,6 @@ The monitoring software for APM is written in python and provides the following 
 - Automated calculation of minimum, maximum and average values over time of measurement
 - Automated calculation of overall power per interface (AGP slot, external power and alternative inputs)
 - Automated calculation of total power of all interfaces combined
-
-![apm software](./pictures/interface.png)
   
 ## Known issues
 
@@ -79,7 +74,7 @@ The monitoring software for APM is written in python and provides the following 
 
 ## Reference values
 
-To see some values from measured graphics cards, see [reference values](./REFERENCE_VALUES.md)
+To see some values from measured graphics cards, see [reference values](https://tehsiggi.github.io/agp-power-monitor/)
 
 ## Disclaimer
 
