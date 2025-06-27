@@ -6,9 +6,17 @@
   <title>GPU Measurements</title>
   <style>
     body { font-family: sans-serif; padding: 1em; background: #f9f9f9; }
+    .header-nav { display: flex; align-items: center; margin-bottom: 1em; }
+    .back-btn { display: inline-block; padding: 0.5em 1em; background: #4a90e2; color: white; text-decoration: none; border-radius: 4px; margin-right: 1em; transition: background 0.2s; }
+    .back-btn:hover { background: #3a80d2; }
+    .back-btn::before { content: "← "; }
     .measurement-section { margin-bottom: 1em; }
-    .measurement-header { cursor: pointer; margin: 0; background: #ddd; padding: 0.5em; display: flex; justify-content: space-between; align-items: center; }
-    .measurement-content { display: none; padding: 0.5em; background: #fff; border: 1px solid #ccc; }
+    .measurement-header { cursor: pointer; margin: 0; background: #ddd; padding: 0.5em; display: flex; justify-content: space-between; align-items: center; border-radius: 4px 4px 0 0; transition: background 0.2s; user-select: none; }
+    .measurement-header:hover { background: #c8c8c8; }
+    .measurement-header-text { display: flex; align-items: center; }
+    .measurement-header-text::before { content: "+ "; margin-right: 0.5em; font-size: 1.2em; font-weight: bold; }
+    .measurement-section.active .measurement-header-text::before { content: "− "; }
+    .measurement-content { display: none; padding: 0.5em; background: #fff; border: 1px solid #ccc; border-top: none; border-radius: 0 0 4px 4px; }
     .measurement-section.active .measurement-content { display: block; }
     table { width: 100%; border-collapse: collapse; margin-top: 0.5em; table-layout: fixed; }
     th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; width: 25%; }
@@ -20,7 +28,9 @@
   </style>
 </head>
 <body>
-  <h1>GPU Information</h1>
+  <div class="header-nav">
+    <a href="index.html" class="back-btn">Back to GPU List</a>
+  </div>
   <div id="generalInfo" class="info-wrapper"></div>
   <div id="gpuComment"></div>
   <div id="summaryBox"></div>
@@ -120,7 +130,7 @@
       header.className = 'measurement-header';
       const total = measurement.totalPower;
       header.innerHTML = `
-        <span>${measurement.title}</span>
+        <span class="measurement-header-text">${measurement.title}</span>
         <span>Avg: ${total.average} W - Min: ${total.min} W - Max: ${total.max} W</span>
       `;
       header.addEventListener('click', toggleSection);
