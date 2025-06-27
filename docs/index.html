@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGP Power Monitor - GPU References</title>
+  <style>
+    body { font-family: sans-serif; padding: 1em; background: #f9f9f9; }
+    h1 { margin-bottom: 1em; }
+    .gpu-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1em; }
+    .gpu-card { background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 1em; transition: transform 0.2s; }
+    .gpu-card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .gpu-card h3 { margin-top: 0; margin-bottom: 0.5em; min-height: 2.5em; display: flex; align-items: center; }
+    .gpu-card p { margin: 0.3em 0; }
+    .gpu-specs { margin-top: 0.5em; }
+    .view-btn { display: inline-block; margin-top: 1em; padding: 0.5em 1em; background: #4a90e2; color: white; text-decoration: none; border-radius: 4px; }
+    .view-btn:hover { background: #3a80d2; }
+    .loading { text-align: center; padding: 2em; font-style: italic; color: #666; }
+    .power-summary { margin-top: 0.5em; padding-top: 0.5em; border-top: 1px solid #eee; }
+  </style>
+</head>
+<body>
+  <h1>AGP Graphics Card Power References</h1>
+  <div id="gpuList" class="gpu-list">
+    <div class="loading">Loading GPU references...</div>
+  </div>
+
+  <script>
+    // Function to load and parse a JSON file
+    async function loadJSON(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+      } catch (error) {
+        console.error(`Error loading ${url}: ${error.message}`);
+        return null;
+      }
+    }
+
+    // Function to calculate memory bandwidth in GB/s
+    function calculateBandwidth(busWidth, clockMHz) {
+      // Memory bandwidth = bus width (bits) * clock speed (MHz) * 2 (DDR) / 8 (bits to bytes) / 1000 (MB to GB)
+      return ((busWidth * clockMHz * 2) / 8 / 1000).toFixed(2);
+    }
+
+    // Function to create GPU card elements
+    function createGPUCard(data, filename) {
+      const card = document.createElement('div');
+      card.className = 'gpu-card';
+
+      // Get the base filename without extension for use in the viewer link
+      const baseFilename = filename.replace('.json', '');
+      
+      // Calculate average power consumption across all measurements
+      const totals = data.measurements.map(m => m.totalPower);
+      const avgPower = (totals.reduce((acc, cur) => acc + cur.average, 0) / totals.length).toFixed(2);
+      const maxPower = Math.max(...totals.map(t => t.max)).toFixed(2);
+      const minPower = Math.min(...totals.map(t => t.min)).toFixed(2);
+      
+      // Calculate memory bandwidth
+      const bandwidth = calculateBandwidth(data.memory.busWidth, data.memory.clock['3D']);
+
+      card.innerHTML = `
+        <h3>${data.name}</h3>
+        <div class="gpu-specs">
+          <p><strong>GPU:</strong> ${data.gpu.name} (${data.gpu.codename})</p>
+          <p><strong>Architecture:</strong> ${data.gpu.architecture}</p>
+          <p><strong>Process:</strong> ${data.gpu.processTechnology}</p>
+          <p><strong>Memory:</strong> ${data.memory.size} MB ${data.memory.type}</p>
+          <p><strong>Memory Bus:</strong> ${data.memory.busWidth}-bit (${bandwidth} GB/s)</p>
+          <p><strong>Clock:</strong> ${data.gpu.clock['3D']} MHz / Memory: ${data.memory.clock['3D']} MHz</p>
+          <div class="power-summary">
+            <p><strong>Power:</strong> ${avgPower} W avg (min: ${minPower} W, max: ${maxPower} W)</p>
+          </div>
+        </div>
+        <a href="viewer.html?target=${baseFilename}" class="view-btn">View Details</a>
+      `;
+      
+      return card;
+    }
+
+    // Main function to initialize the page
+    async function init() {
+      const gpuListElement = document.getElementById('gpuList');
+      
+      // List of JSON files to load
+      const jsonFiles = [
+        'gigabyte_gv-r92128vh.json',
+        'his_radeon9550_256.json',
+        'powercolor_r92_256.json',
+        'sapphire_radeon_9100_128.json',
+        'his_radeon9600_256.json',
+        'sapphire_radeon9600_256ddr2.json',
+        'ati_radeon9800pro_128_hynix.json',
+        'hercules_radeon9700pro_128.json',
+      ];
+      
+      // Clear loading message
+      gpuListElement.innerHTML = '';
+      
+      // Load each JSON file and create a card for it
+      for (const filename of jsonFiles) {
+        const data = await loadJSON(`./references/${filename}`);
+        if (data) {
+          const card = createGPUCard(data, filename);
+          gpuListElement.appendChild(card);
+        }
+      }
+      
+      // If no cards were loaded, show an error message
+      if (gpuListElement.children.length === 0) {
+        gpuListElement.innerHTML = '<p>Error loading GPU references. Please try again later.</p>';
+      }
+    }
+    
+    // Initialize the page when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
