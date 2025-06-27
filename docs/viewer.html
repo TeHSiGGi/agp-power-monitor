@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPU Measurements</title>
+  <style>
+    body { font-family: sans-serif; padding: 1em; background: #f9f9f9; }
+    .measurement-section { margin-bottom: 1em; }
+    .measurement-header { cursor: pointer; margin: 0; background: #ddd; padding: 0.5em; display: flex; justify-content: space-between; align-items: center; }
+    .measurement-content { display: none; padding: 0.5em; background: #fff; border: 1px solid #ccc; }
+    .measurement-section.active .measurement-content { display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.5em; table-layout: fixed; }
+    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; width: 25%; }
+    th { background: #eee; }
+    .info-wrapper { display: flex; flex-wrap: wrap; gap: 1em; margin-bottom: 1em; }
+    .info-group { flex: 1 1 300px; background: #fff; padding: 1em; border: 1px solid #ccc; border-radius: 4px; }
+    .info-group h3 { margin-bottom: 0.5em; }
+    .comment-box, .summary-box { background: #fff; padding: 1em; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 1em; }
+  </style>
+</head>
+<body>
+  <h1>GPU Information</h1>
+  <div id="generalInfo" class="info-wrapper"></div>
+  <div id="gpuComment"></div>
+  <div id="summaryBox"></div>
+  <h2>Measurements</h2>
+  <div id="measurements"></div>
+
+  <script>
+    // The data will be passed in as a query parameter in the URL called "target"
+    const urlParams = new URLSearchParams(window.location.search);
+    const target = urlParams.get('target');
+    if (!target) {
+      document.body.innerHTML = '<h2>Error: No target specified in the URL.</h2>';
+      throw new Error('No target specified in the URL.');
+    }
+    // all data is in the references directory, we have to fetch it
+    const dataUrl = `./references/${target}.json`;
+    // Fetch the data from the JSON file (synchronous)
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', dataUrl, false); // false for synchronous request
+    xhr.send();
+    if (xhr.status !== 200) {
+        document.body.innerHTML = `<h2>Error: Unable to fetch data from ${dataUrl
+        }. Status: ${xhr.status}</h2>`;
+        throw new Error(`Unable to fetch data from ${dataUrl}. Status: ${xhr.status
+        }`);
+    }
+    // Parse the JSON data
+    const data = JSON.parse(xhr.responseText);
+
+    function toggleSection(e) {
+      e.currentTarget.parentElement.classList.toggle('active');
+    }
+
+    const generalInfoDiv = document.getElementById('generalInfo');
+    const commentDiv = document.getElementById('gpuComment');
+    const summaryBox = document.getElementById('summaryBox');
+    const measurementsDiv = document.getElementById('measurements');
+
+    const gpu = data.gpu;
+    const memory = data.memory;
+
+    generalInfoDiv.innerHTML = `
+      <div class="info-group">
+        <h3>Device</h3>
+        <p><strong>Name:</strong> ${data.name}<br/>
+        <strong>Model:</strong> ${data.modelNumber}<br/>
+        <strong>Manufacturer:</strong> ${data.manufacturer}</p>
+      </div>
+      <div class="info-group">
+        <h3>GPU</h3>
+        <p><strong>Name:</strong> ${gpu.name}<br/>
+        <strong>Codename:</strong> ${gpu.codename}<br/>
+        <strong>Architecture:</strong> ${gpu.architecture}<br/>
+        <strong>Process:</strong> ${gpu.processTechnology}<br/>
+        <strong>Release Date:</strong> ${gpu.releaseDate}<br/>
+        <strong>Clock:</strong> 2D: ${gpu.clock['2D']} MHz, 3D: ${gpu.clock['3D']} MHz<br/>
+        <strong>Organization:</strong> ${gpu.organization}</p>
+      </div>
+      <div class="info-group">
+        <h3>Memory</h3>
+        <p><strong>Type:</strong> ${memory.type}<br/>
+        <strong>Size:</strong> ${memory.size} MB<br/>
+        <strong>Bus Width:</strong> ${memory.busWidth}-bit<br/>
+        <strong>Clock:</strong> 2D: ${memory.clock['2D']} MHz, 3D: ${memory.clock['3D']} MHz<br/>
+        <strong>Chips:</strong> ${memory.chipCount}<br/>
+        <strong>Manufacturer:</strong> ${memory.manufacturer}<br/>
+        <strong>Part #:</strong> ${memory.partNumber}</p>
+      </div>
+    `;
+
+    if (data.comment) {
+      commentDiv.innerHTML = `
+        <div class="comment-box">
+          <h3>Comment</h3>
+          <p>${data.comment}</p>
+        </div>
+      `;
+    }
+
+    const totals = data.measurements.map(m => m.totalPower);
+    const avg = (totals.reduce((acc, cur) => acc + cur.average, 0) / totals.length).toFixed(2);
+    const min = Math.min(...totals.map(t => t.min)).toFixed(2);
+    const max = Math.max(...totals.map(t => t.max)).toFixed(2);
+
+    summaryBox.innerHTML = `
+      <div class="summary-box">
+        <h3>Total Power Summary</h3>
+        <p><strong>Avg:</strong> ${avg} W &nbsp; <strong>Min:</strong> ${min} W &nbsp; <strong>Max:</strong> ${max} W</p>
+      </div>
+    `;
+
+    data.measurements.forEach(measurement => {
+      const section = document.createElement('div');
+      section.className = 'measurement-section';
+
+      const header = document.createElement('h3');
+      header.className = 'measurement-header';
+      const total = measurement.totalPower;
+      header.innerHTML = `
+        <span>${measurement.title}</span>
+        <span>Avg: ${total.average} W - Min: ${total.min} W - Max: ${total.max} W</span>
+      `;
+      header.addEventListener('click', toggleSection);
+
+      const content = document.createElement('div');
+      content.className = 'measurement-content';
+
+      measurement.rails.forEach(rail => {
+        const table = document.createElement('table');
+        table.innerHTML = `
+          <thead><tr><th colspan="4">${rail.name}</th></tr></thead>
+          <tbody>
+            <tr><th>Type</th><th>Min</th><th>Max</th><th>Avg</th></tr>
+            <tr><td>Voltage (V)</td><td>${rail.voltage.min}</td><td>${rail.voltage.max}</td><td>${rail.voltage.average}</td></tr>
+            <tr><td>Current (A)</td><td>${rail.current.min}</td><td>${rail.current.max}</td><td>${rail.current.average}</td></tr>
+            <tr><td>Power (W)</td><td>${rail.power.min}</td><td>${rail.power.max}</td><td>${rail.power.average}</td></tr>
+          </tbody>
+        `;
+        content.appendChild(table);
+      });
+
+      const totalTable = document.createElement('table');
+      totalTable.innerHTML = `
+        <thead><tr><th colspan="4">Total Power</th></tr></thead>
+        <tbody>
+          <tr><th>Min</th><th>Max</th><th>Average</th></tr>
+          <tr><td>${total.min}</td><td>${total.max}</td><td>${total.average}</td></tr>
+        </tbody>
+      `;
+      content.appendChild(totalTable);
+
+      section.appendChild(header);
+      section.appendChild(content);
+      measurementsDiv.appendChild(section);
+    });
+  </script>
+</body>
+</html>
