@@ -1,0 +1,360 @@
+{
+    "name": "ATI Radeon 9000",
+    "modelNumber": "n/a",
+    "manufacturer": "Manli",
+    "comment": "Active cooler, neither series nor parallel termination on the memory lines",
+    "gpu": {
+        "name": "Radeon 9000",
+        "codename": "RV250",
+        "architecture": "DirectX 8.1",
+        "processTechnology": "150nm",
+        "releaseDate": "2002-06-01",
+        "clock": {
+            "2D": 250,
+            "3D": 250
+        },
+        "organization": "4 ROPS, 4 TMUs, 4 Pixel Pipelines, 1 Vertex Shaders"
+    },
+    "memory": {
+        "type": "DDR",
+        "size": 64,
+        "busWidth": 128,
+        "clock": {
+            "2D": 200,
+            "3D": 200
+        },
+        "chipCount": 8,
+        "partNumber": "K4D64163HF-TC40",
+        "manufacturer": "Samsung"
+    },
+    "measurements": [
+        {
+            "title": "Windows desktop",
+            "rails": [
+                {
+                    "name": "12V",
+                    "voltage": {
+                        "min": 12.232,
+                        "max": 12.288,
+                        "average": 12.28
+                    },
+                    "current": {
+                        "min": 0.132,
+                        "max": 0.156,
+                        "average": 0.143
+                    },
+                    "power": {
+                        "min": 1.61,
+                        "max": 1.919,
+                        "average": 1.762
+                    }
+                },
+                {
+                    "name": "5V",
+                    "voltage": {
+                        "min": 5.128,
+                        "max": 5.144,
+                        "average": 5.136
+                    },
+                    "current": {
+                        "min": 0.193,
+                        "max": 0.481,
+                        "average": 0.424
+                    },
+                    "power": {
+                        "min": 0.991,
+                        "max": 2.47,
+                        "average": 2.179
+                    }
+                },
+                {
+                    "name": "3.3V",
+                    "voltage": {
+                        "min": 3.176,
+                        "max": 3.312,
+                        "average": 3.192
+                    },
+                    "current": {
+                        "min": 1.718,
+                        "max": 1.886,
+                        "average": 1.77
+                    },
+                    "power": {
+                        "min": 5.484,
+                        "max": 6.022,
+                        "average": 5.65
+                    }
+                },
+                {
+                    "name": "VDDQ",
+                    "voltage": {
+                        "min": 1.52,
+                        "max": 1.528,
+                        "average": 1.52
+                    },
+                    "current": {
+                        "min": 0.0,
+                        "max": 0.004,
+                        "average": 0.0
+                    },
+                    "power": {
+                        "min": 0.0,
+                        "max": 0.006,
+                        "average": 0.0
+                    }
+                }
+            ],
+            "totalPower": {
+                "min": 8.084,
+                "max": 10.417,
+                "average": 9.591
+            }
+        },
+        {
+            "title": "Aquamark 3",
+            "rails": [
+                {
+                    "name": "12V",
+                    "voltage": {
+                        "min": 12.16,
+                        "max": 12.296,
+                        "average": 12.242
+                    },
+                    "current": {
+                        "min": 0.127,
+                        "max": 0.156,
+                        "average": 0.143
+                    },
+                    "power": {
+                        "min": 1.556,
+                        "max": 1.919,
+                        "average": 1.746
+                    }
+                },
+                {
+                    "name": "5V",
+                    "voltage": {
+                        "min": 5.024,
+                        "max": 5.152,
+                        "average": 5.094
+                    },
+                    "current": {
+                        "min": 0.078,
+                        "max": 1.57,
+                        "average": 0.936
+                    },
+                    "power": {
+                        "min": 0.401,
+                        "max": 8.026,
+                        "average": 4.763
+                    }
+                },
+                {
+                    "name": "3.3V",
+                    "voltage": {
+                        "min": 3.064,
+                        "max": 3.208,
+                        "average": 3.11
+                    },
+                    "current": {
+                        "min": 1.623,
+                        "max": 4.768,
+                        "average": 3.718
+                    },
+                    "power": {
+                        "min": 5.182,
+                        "max": 14.837,
+                        "average": 11.555
+                    }
+                },
+                {
+                    "name": "VDDQ",
+                    "voltage": {
+                        "min": 1.488,
+                        "max": 1.528,
+                        "average": 1.512
+                    },
+                    "current": {
+                        "min": 0.0,
+                        "max": 0.07,
+                        "average": 0.012
+                    },
+                    "power": {
+                        "min": 0.0,
+                        "max": 0.106,
+                        "average": 0.018
+                    }
+                }
+            ],
+            "totalPower": {
+                "min": 7.14,
+                "max": 24.887,
+                "average": 18.082
+            }
+        },
+        {
+            "title": "3DMark 2001 SE",
+            "rails": [
+                {
+                    "name": "12V",
+                    "voltage": {
+                        "min": 12.16,
+                        "max": 12.304,
+                        "average": 12.244
+                    },
+                    "current": {
+                        "min": 0.127,
+                        "max": 0.173,
+                        "average": 0.143
+                    },
+                    "power": {
+                        "min": 1.555,
+                        "max": 2.114,
+                        "average": 1.746
+                    }
+                },
+                {
+                    "name": "5V",
+                    "voltage": {
+                        "min": 4.992,
+                        "max": 5.16,
+                        "average": 5.096
+                    },
+                    "current": {
+                        "min": 0.078,
+                        "max": 1.562,
+                        "average": 0.94
+                    },
+                    "power": {
+                        "min": 0.401,
+                        "max": 7.909,
+                        "average": 4.78
+                    }
+                },
+                {
+                    "name": "3.3V",
+                    "voltage": {
+                        "min": 3.056,
+                        "max": 3.2,
+                        "average": 3.119
+                    },
+                    "current": {
+                        "min": 1.636,
+                        "max": 4.78,
+                        "average": 3.38
+                    },
+                    "power": {
+                        "min": 5.181,
+                        "max": 14.913,
+                        "average": 10.509
+                    }
+                },
+                {
+                    "name": "VDDQ",
+                    "voltage": {
+                        "min": 1.488,
+                        "max": 1.52,
+                        "average": 1.514
+                    },
+                    "current": {
+                        "min": 0.0,
+                        "max": 0.025,
+                        "average": 0.007
+                    },
+                    "power": {
+                        "min": 0.0,
+                        "max": 0.037,
+                        "average": 0.01
+                    }
+                }
+            ],
+            "totalPower": {
+                "min": 7.137,
+                "max": 24.974,
+                "average": 17.047
+            }
+        },
+        {
+            "title": "3DMark 2003",
+            "rails": [
+                {
+                    "name": "12V",
+                    "voltage": {
+                        "min": 12.192,
+                        "max": 12.304,
+                        "average": 12.246
+                    },
+                    "current": {
+                        "min": 0.127,
+                        "max": 0.152,
+                        "average": 0.143
+                    },
+                    "power": {
+                        "min": 1.557,
+                        "max": 1.871,
+                        "average": 1.746
+                    }
+                },
+                {
+                    "name": "5V",
+                    "voltage": {
+                        "min": 5.008,
+                        "max": 5.16,
+                        "average": 5.091
+                    },
+                    "current": {
+                        "min": 0.09,
+                        "max": 1.582,
+                        "average": 1.031
+                    },
+                    "power": {
+                        "min": 0.458,
+                        "max": 8.03,
+                        "average": 5.239
+                    }
+                },
+                {
+                    "name": "3.3V",
+                    "voltage": {
+                        "min": 3.056,
+                        "max": 3.296,
+                        "average": 3.112
+                    },
+                    "current": {
+                        "min": 1.632,
+                        "max": 4.821,
+                        "average": 3.536
+                    },
+                    "power": {
+                        "min": 5.127,
+                        "max": 14.926,
+                        "average": 10.983
+                    }
+                },
+                {
+                    "name": "VDDQ",
+                    "voltage": {
+                        "min": 1.488,
+                        "max": 1.52,
+                        "average": 1.513
+                    },
+                    "current": {
+                        "min": 0.0,
+                        "max": 0.058,
+                        "average": 0.009
+                    },
+                    "power": {
+                        "min": 0.0,
+                        "max": 0.087,
+                        "average": 0.013
+                    }
+                }
+            ],
+            "totalPower": {
+                "min": 7.143,
+                "max": 24.914,
+                "average": 17.981
+            }
+        }
+    ]
+}
