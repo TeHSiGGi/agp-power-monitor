@@ -1,8 +1,8 @@
 {
-    "name": "Gigabyte Radeon 9200",
-    "modelNumber": "GA92128VH",
-    "manufacturer": "Gigabyte",
-    "comment": "VIVO Version. Uses a switching regulator for VDDC (ISL6522). Active FAN + hardware monitoring using Winbond W83L785R.",
+    "name": "ATI Radeon 9200 256MB",
+    "modelNumber": "n/a",
+    "manufacturer": "HIS",
+    "comment": "VIVO, passive cooler",
     "gpu": {
         "name": "Radeon 9200",
         "codename": "RV280",
@@ -17,14 +17,14 @@
     },
     "memory": {
         "type": "DDR",
-        "size": 128,
+        "size": 64,
         "busWidth": 128,
         "clock": {
             "2D": 200,
             "3D": 200
         },
         "chipCount": 8,
-        "partNumber": "HY5DV281622DT-4",
+        "partNumber": "HY5DV281622DT-4S",
         "manufacturer": "Hynix"
     },
     "measurements": [
@@ -34,80 +34,80 @@
                 {
                     "name": "12V",
                     "voltage": {
-                        "min": 12.28,
+                        "min": 12.232,
                         "max": 12.296,
-                        "average": 12.288
+                        "average": 12.287
                     },
                     "current": {
-                        "min": 0.136,
-                        "max": 0.148,
-                        "average": 0.141
+                        "min": 0.008,
+                        "max": 0.07,
+                        "average": 0.07
                     },
                     "power": {
-                        "min": 1.666,
-                        "max": 1.818,
-                        "average": 1.728
+                        "min": 0.101,
+                        "max": 0.859,
+                        "average": 0.858
                     }
                 },
                 {
                     "name": "5V",
                     "voltage": {
-                        "min": 5.136,
+                        "min": 5.12,
                         "max": 5.152,
-                        "average": 5.137
+                        "average": 5.136
                     },
                     "current": {
-                        "min": 0.325,
-                        "max": 0.497,
-                        "average": 0.481
+                        "min": 0.206,
+                        "max": 0.386,
+                        "average": 0.369
                     },
                     "power": {
-                        "min": 1.668,
-                        "max": 2.558,
-                        "average": 2.47
+                        "min": 1.055,
+                        "max": 1.984,
+                        "average": 1.897
                     }
                 },
                 {
                     "name": "3.3V",
                     "voltage": {
-                        "min": 3.2,
-                        "max": 3.208,
-                        "average": 3.208
+                        "min": 3.176,
+                        "max": 3.312,
+                        "average": 3.188
                     },
                     "current": {
-                        "min": 1.496,
-                        "max": 1.558,
-                        "average": 1.544
+                        "min": 1.66,
+                        "max": 1.726,
+                        "average": 1.711
                     },
                     "power": {
-                        "min": 4.799,
-                        "max": 4.997,
-                        "average": 4.952
+                        "min": 5.287,
+                        "max": 5.704,
+                        "average": 5.456
                     }
                 },
                 {
                     "name": "VDDQ",
                     "voltage": {
-                        "min": 1.512,
+                        "min": 1.488,
                         "max": 1.52,
-                        "average": 1.514
+                        "average": 1.516
                     },
                     "current": {
                         "min": 0.025,
-                        "max": 0.029,
+                        "max": 0.049,
                         "average": 0.025
                     },
                     "power": {
                         "min": 0.037,
-                        "max": 0.044,
-                        "average": 0.038
+                        "max": 0.075,
+                        "average": 0.037
                     }
                 }
             ],
             "totalPower": {
-                "min": 8.17,
-                "max": 9.417,
-                "average": 9.188
+                "min": 6.48,
+                "max": 8.621,
+                "average": 8.249
             }
         },
         {
@@ -116,55 +116,55 @@
                 {
                     "name": "12V",
                     "voltage": {
-                        "min": 12.208,
+                        "min": 12.192,
                         "max": 12.312,
-                        "average": 12.25
+                        "average": 12.249
                     },
                     "current": {
-                        "min": 0.132,
-                        "max": 0.148,
-                        "average": 0.14
+                        "min": 0.008,
+                        "max": 0.07,
+                        "average": 0.07
                     },
                     "power": {
-                        "min": 1.607,
-                        "max": 1.816,
-                        "average": 1.714
+                        "min": 0.101,
+                        "max": 0.86,
+                        "average": 0.855
                     }
                 },
                 {
                     "name": "5V",
                     "voltage": {
-                        "min": 5.072,
+                        "min": 5.024,
                         "max": 5.152,
-                        "average": 5.118
+                        "average": 5.11
                     },
                     "current": {
-                        "min": 0.238,
-                        "max": 1.492,
-                        "average": 0.887
+                        "min": 0.14,
+                        "max": 1.41,
+                        "average": 0.813
                     },
                     "power": {
-                        "min": 1.222,
-                        "max": 7.641,
-                        "average": 4.533
+                        "min": 0.717,
+                        "max": 7.207,
+                        "average": 4.152
                     }
                 },
                 {
                     "name": "3.3V",
                     "voltage": {
-                        "min": 3.152,
-                        "max": 3.312,
-                        "average": 3.182
+                        "min": 3.136,
+                        "max": 3.248,
+                        "average": 3.16
                     },
                     "current": {
-                        "min": 1.459,
-                        "max": 2.598,
-                        "average": 2.019
+                        "min": 1.623,
+                        "max": 2.848,
+                        "average": 2.248
                     },
                     "power": {
-                        "min": 4.647,
-                        "max": 8.25,
-                        "average": 6.421
+                        "min": 5.169,
+                        "max": 9.0,
+                        "average": 7.1
                     }
                 },
                 {
@@ -172,24 +172,24 @@
                     "voltage": {
                         "min": 1.488,
                         "max": 1.52,
-                        "average": 1.513
+                        "average": 1.514
                     },
                     "current": {
                         "min": 0.025,
-                        "max": 0.066,
-                        "average": 0.026
+                        "max": 0.058,
+                        "average": 0.025
                     },
                     "power": {
                         "min": 0.037,
-                        "max": 0.099,
-                        "average": 0.039
+                        "max": 0.087,
+                        "average": 0.038
                     }
                 }
             ],
             "totalPower": {
-                "min": 7.517,
-                "max": 17.806,
-                "average": 12.709
+                "min": 6.023,
+                "max": 17.154,
+                "average": 12.145
             }
         },
         {
@@ -200,53 +200,53 @@
                     "voltage": {
                         "min": 12.192,
                         "max": 12.312,
-                        "average": 12.255
+                        "average": 12.251
                     },
                     "current": {
-                        "min": 0.132,
-                        "max": 0.148,
-                        "average": 0.14
+                        "min": 0.066,
+                        "max": 0.07,
+                        "average": 0.069
                     },
                     "power": {
-                        "min": 1.609,
-                        "max": 1.818,
-                        "average": 1.716
+                        "min": 0.802,
+                        "max": 0.86,
+                        "average": 0.849
                     }
                 },
                 {
                     "name": "5V",
                     "voltage": {
-                        "min": 5.072,
-                        "max": 5.168,
-                        "average": 5.119
+                        "min": 5.056,
+                        "max": 5.152,
+                        "average": 5.109
                     },
                     "current": {
-                        "min": 0.23,
-                        "max": 1.484,
-                        "average": 0.864
+                        "min": 0.132,
+                        "max": 1.41,
+                        "average": 0.816
                     },
                     "power": {
-                        "min": 1.188,
-                        "max": 7.537,
-                        "average": 4.417
+                        "min": 0.677,
+                        "max": 7.173,
+                        "average": 4.16
                     }
                 },
                 {
                     "name": "3.3V",
                     "voltage": {
-                        "min": 3.072,
-                        "max": 3.28,
-                        "average": 3.185
+                        "min": 3.128,
+                        "max": 3.248,
+                        "average": 3.162
                     },
                     "current": {
-                        "min": 1.443,
-                        "max": 2.717,
-                        "average": 1.925
+                        "min": 1.628,
+                        "max": 2.972,
+                        "average": 2.187
                     },
                     "power": {
-                        "min": 4.558,
-                        "max": 8.585,
-                        "average": 6.127
+                        "min": 5.195,
+                        "max": 9.319,
+                        "average": 6.909
                     }
                 },
                 {
@@ -258,77 +258,77 @@
                     },
                     "current": {
                         "min": 0.025,
-                        "max": 0.086,
-                        "average": 0.027
+                        "max": 0.099,
+                        "average": 0.026
                     },
                     "power": {
                         "min": 0.037,
-                        "max": 0.131,
-                        "average": 0.04
+                        "max": 0.149,
+                        "average": 0.039
                     }
                 }
             ],
             "totalPower": {
-                "min": 7.391,
-                "max": 18.071,
-                "average": 12.3
+                "min": 6.71,
+                "max": 17.501,
+                "average": 11.958
             }
         },
         {
-            "title": "3DMark 03",
+            "title": "3DMark 2003",
             "rails": [
                 {
                     "name": "12V",
                     "voltage": {
-                        "min": 12.208,
+                        "min": 12.2,
                         "max": 12.312,
-                        "average": 12.256
+                        "average": 12.25
                     },
                     "current": {
-                        "min": 0.132,
-                        "max": 0.148,
-                        "average": 0.14
+                        "min": 0.066,
+                        "max": 0.07,
+                        "average": 0.068
                     },
                     "power": {
-                        "min": 1.608,
-                        "max": 1.819,
-                        "average": 1.711
+                        "min": 0.804,
+                        "max": 0.86,
+                        "average": 0.833
                     }
                 },
                 {
                     "name": "5V",
                     "voltage": {
-                        "min": 5.056,
-                        "max": 5.184,
-                        "average": 5.112
+                        "min": 5.048,
+                        "max": 5.152,
+                        "average": 5.104
                     },
                     "current": {
-                        "min": 0.247,
-                        "max": 1.41,
-                        "average": 1.002
+                        "min": 0.136,
+                        "max": 1.328,
+                        "average": 0.944
                     },
                     "power": {
-                        "min": 1.269,
-                        "max": 7.195,
-                        "average": 5.119
+                        "min": 0.689,
+                        "max": 6.765,
+                        "average": 4.815
                     }
                 },
                 {
                     "name": "3.3V",
                     "voltage": {
-                        "min": 3.152,
+                        "min": 3.128,
                         "max": 3.216,
-                        "average": 3.18
+                        "average": 3.156
                     },
                     "current": {
-                        "min": 1.455,
-                        "max": 2.593,
-                        "average": 2.056
+                        "min": 1.636,
+                        "max": 2.861,
+                        "average": 2.31
                     },
                     "power": {
-                        "min": 4.634,
-                        "max": 8.216,
-                        "average": 6.537
+                        "min": 5.168,
+                        "max": 8.994,
+                        "average": 7.289
                     }
                 },
                 {
@@ -339,21 +339,21 @@
                         "average": 1.513
                     },
                     "current": {
-                        "min": 0.025,
-                        "max": 0.086,
-                        "average": 0.026
+                        "min": 0.021,
+                        "max": 0.074,
+                        "average": 0.025
                     },
                     "power": {
-                        "min": 0.037,
-                        "max": 0.131,
-                        "average": 0.039
+                        "min": 0.031,
+                        "max": 0.112,
+                        "average": 0.038
                     }
                 }
             ],
             "totalPower": {
-                "min": 7.547,
-                "max": 17.361,
-                "average": 13.406
+                "min": 6.692,
+                "max": 16.731,
+                "average": 12.976
             }
         }
     ]
