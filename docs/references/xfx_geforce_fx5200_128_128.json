@@ -1,8 +1,8 @@
 {
     "name": "GeForce FX5200 128MB 128bit",
-    "modelNumber": "N6800XT/TD/128M/A",
+    "modelNumber": "PV-T34K-NAHG",
     "manufacturer": "XFX",
-    "comment": "PV-T34K-NAHG",
+    "comment": "",
     "gpu": {
         "name": "GeForce FX5200",
         "codename": "NV34",

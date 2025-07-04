@@ -1,5 +1,5 @@
 {
-    "name": "GeForce 6200XT 128MB",
+    "name": "GeForce 6800XT 128MB",
     "modelNumber": "N6800XT/TD/128M/A",
     "manufacturer": "ASUS",
     "comment": "",
@@ -24,8 +24,8 @@
             "3D": 350
         },
         "chipCount": 8,
-        "partNumber": "HYB25D128323C-3.3",
-        "manufacturer": "Infineon"
+        "partNumber": "K4D263238G-GC2A",
+        "manufacturer": "Samsung"
     },
     "measurements": [
         {
