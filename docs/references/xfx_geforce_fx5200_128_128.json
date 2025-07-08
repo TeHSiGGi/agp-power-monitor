@@ -1,9 +1,10 @@
 {
-    "name": "GeForce FX5200 128MB 128bit",
+    "name": "XFX FX5200 128MB 128bit",
     "modelNumber": "PV-T34K-NAHG",
     "manufacturer": "XFX",
     "comment": "",
     "gpu": {
+        "company": "NVIDIA",
         "name": "GeForce FX5200",
         "codename": "NV34",
         "architecture": "DirectX 9.0",

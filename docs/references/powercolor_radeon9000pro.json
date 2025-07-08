@@ -1,9 +1,10 @@
 {
-    "name": "ATI Radeon 9000 Pro",
+    "name": "PowerColor Radeon 9000 Pro",
     "modelNumber": "n/a",
     "manufacturer": "PowerColor",
     "comment": "Active cooler",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9000 Pro",
         "codename": "RV250",
         "architecture": "DirectX 8.1",

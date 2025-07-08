@@ -1,9 +1,10 @@
 {
-    "name": "Geforce 4 Ti 4200 64MB",
-    "modelNumber": "Geforce Ti4200 Turbo",
+    "name": "Albatron GeForce 4 Ti 4200 64MB",
+    "modelNumber": "GeForce Ti4200 Turbo",
     "manufacturer": "Albatron",
     "comment": "",
     "gpu": {
+        "company": "NVIDIA",
         "name": "GeForce 4 Ti 4200",
         "codename": "NV25",
         "architecture": "DirectX 8.1",

@@ -1,9 +1,10 @@
 {
-    "name": "ATI Radeon 9200 256MB",
+    "name": "HIS Radeon 9200 128MB VIVO",
     "modelNumber": "n/a",
     "manufacturer": "HIS",
     "comment": "VIVO, passive cooler",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9200",
         "codename": "RV280",
         "architecture": "DirectX 8.1",

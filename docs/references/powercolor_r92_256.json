@@ -4,6 +4,7 @@
     "manufacturer": "Gecube",
     "comment": "",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9200",
         "codename": "RV280",
         "architecture": "DirectX 8.1",

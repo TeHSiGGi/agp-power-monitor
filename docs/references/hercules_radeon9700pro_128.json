@@ -4,6 +4,7 @@
     "manufacturer": "Hercules",
     "comment": "Using arctic silencer",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9700 Pro",
         "codename": "R300",
         "architecture": "DirectX 9.0",

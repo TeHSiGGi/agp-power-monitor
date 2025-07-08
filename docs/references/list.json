@@ -1,0 +1,22 @@
+{
+    "references": [
+        "gigabyte_gv-r92128vh.json",
+        "his_radeon9550_256.json",
+        "powercolor_r92_256.json",
+        "sapphire_radeon_9100_128.json",
+        "his_radeon9600_256.json",
+        "sapphire_radeon9600_256ddr2.json",
+        "ati_radeon9800pro_128_hynix.json",
+        "hercules_radeon9700pro_128.json",
+        "manli_radeon9000_64.json",
+        "powercolor_radeon9000pro.json",
+        "his_radeon9200_64.json",
+        "his_radeon9200_128.json",
+        "msi_geforce6200_128.json",
+        "sapphire_radeon9500_128.json",
+        "xfx_geforce_fx5200_128_128.json",
+        "asus_geforce_6800xt.json",
+        "albatron_geforceTi4200_64.json",
+        "sapphire_radeonx700_256.json"
+    ]
+}

@@ -1,9 +1,10 @@
 {
-    "name": "Gigabyte Radeon 9200",
+    "name": "Gigabyte Radeon 9200 128MB VIVO",
     "modelNumber": "GA92128VH",
     "manufacturer": "Gigabyte",
     "comment": "VIVO Version. Uses a switching regulator for VDDC (ISL6522). Active FAN + hardware monitoring using Winbond W83L785R.",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9200",
         "codename": "RV280",
         "architecture": "DirectX 8.1",

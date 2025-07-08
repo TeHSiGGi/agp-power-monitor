@@ -1,9 +1,10 @@
 {
-    "name": "GeForce 6200 128MB",
+    "name": "MSI GeForce 6200 128MB",
     "modelNumber": "n/a",
     "manufacturer": "MSI",
     "comment": "passive cooler, low profile",
     "gpu": {
+        "company": "NVIDIA",
         "name": "GeForce 6200",
         "codename": "NV44",
         "architecture": "DirectX 9.0",

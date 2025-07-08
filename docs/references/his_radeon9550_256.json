@@ -4,6 +4,7 @@
     "manufacturer": "HIS",
     "comment": "Active cooler",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9550",
         "codename": "RV350",
         "architecture": "DirectX 9.0",
