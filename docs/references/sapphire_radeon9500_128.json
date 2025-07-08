@@ -1,9 +1,10 @@
 {
-    "name": "ATI Radeon 9500 128MB",
+    "name": "Sapphire Radeon 9500 128MB",
     "modelNumber": "n/a",
     "manufacturer": "Sapphire",
     "comment": "Using 9700 board",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9500",
         "codename": "R300",
         "architecture": "DirectX 9.0",

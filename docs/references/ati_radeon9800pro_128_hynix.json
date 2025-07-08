@@ -4,6 +4,7 @@
     "manufacturer": "ATI",
     "comment": "",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9800 Pro",
         "codename": "R350",
         "architecture": "DirectX 9.0",

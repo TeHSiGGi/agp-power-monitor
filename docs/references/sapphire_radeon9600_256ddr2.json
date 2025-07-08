@@ -4,6 +4,7 @@
     "manufacturer": "HIS",
     "comment": "active cooler, DDR2 memory",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9600 Pro",
         "codename": "RV360",
         "architecture": "DirectX 9.0",

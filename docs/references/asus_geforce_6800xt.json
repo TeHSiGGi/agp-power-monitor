@@ -1,9 +1,10 @@
 {
-    "name": "GeForce 6800XT 128MB",
+    "name": "ASUS GeForce 6800XT 128MB",
     "modelNumber": "N6800XT/TD/128M/A",
     "manufacturer": "ASUS",
     "comment": "",
     "gpu": {
+        "company": "NVIDIA",
         "name": "GeForce 6800XT",
         "codename": "NV40",
         "architecture": "DirectX 9.0",

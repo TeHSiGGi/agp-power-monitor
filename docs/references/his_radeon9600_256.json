@@ -4,6 +4,7 @@
     "manufacturer": "HIS",
     "comment": "passive cooler, dual DVI outputs",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9600",
         "codename": "RV350",
         "architecture": "DirectX 9.0",

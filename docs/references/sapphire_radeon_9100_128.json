@@ -1,9 +1,10 @@
 {
-    "name": "Sapphire Radeon 9100",
+    "name": "Sapphire Radeon 9100 128MB VIVO",
     "modelNumber": "n/a",
     "manufacturer": "Sapphire",
     "comment": "VIVO Version",
     "gpu": {
+        "company": "ATI",
         "name": "Radeon 9100",
         "codename": "R200",
         "architecture": "DirectX 8.1",
