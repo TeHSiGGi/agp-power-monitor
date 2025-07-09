@@ -17,6 +17,9 @@
         "xfx_geforce_fx5200_128_128.json",
         "asus_geforce_6800xt.json",
         "albatron_geforceTi4200_64.json",
-        "sapphire_radeonx700_256.json"
+        "sapphire_radeonx700_256.json",
+        "prolink_geforce2_mx400_64.json",
+        "asus_geforce7600gs_256.json",
+        "sapphire_radeonx1950gt_256.json"
     ]
 }
