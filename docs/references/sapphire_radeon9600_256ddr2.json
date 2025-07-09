@@ -1,7 +1,7 @@
 {
     "name": "Sapphire Radeon 9600 Pro 256MB DDR2",
     "modelNumber": "n/a",
-    "manufacturer": "HIS",
+    "manufacturer": "Sapphire",
     "comment": "active cooler, DDR2 memory",
     "gpu": {
         "company": "ATI",
