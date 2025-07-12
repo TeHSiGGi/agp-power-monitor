@@ -36,6 +36,9 @@ from ui.widgets.status_bar import StatusBar
 # Import MarkdownTableDialog
 from ui.widgets.md_dialog import MarkdownTableDialog
 
+# Import JSONDialog
+from ui.widgets.json_dialog import JSONDialog
+
 # Import hardware managers
 from core.serial_manager import SerialManager
 from core.data_manager import DataManager
@@ -128,6 +131,9 @@ class MainWindow(QMainWindow):
         # Connect copy markdown button signal
         self.main_interface.copy_md_button_clicked.connect(self.copy_data_to_markdown)
         
+        # Connect copy JSON button signal
+        self.main_interface.copy_json_button_clicked.connect(self.copy_data_to_json)
+        
         # Create status bar and pass the data_manager for state synchronization
         self.status_bar = StatusBar(parent=self, data_manager=self.data_manager)
         self.status_bar.setObjectName("statusBar")
@@ -153,6 +159,7 @@ class MainWindow(QMainWindow):
         # Export and Copy MD buttons should only be enabled if connected and not sampling
         self.main_interface.enable_export_button(is_connected and not self.data_manager.get_sampling())
         self.main_interface.enable_copy_md_button(is_connected and not self.data_manager.get_sampling())
+        self.main_interface.enable_copy_json_button(is_connected and not self.data_manager.get_sampling())
         
     def set_sampling_status(self, is_running):
         """
@@ -172,6 +179,7 @@ class MainWindow(QMainWindow):
         # Export should only be available when data collection is stopped
         self.main_interface.enable_export_button(self.data_manager.get_connected() and not is_running)
         self.main_interface.enable_copy_md_button(self.data_manager.get_connected() and not is_running)
+        self.main_interface.enable_copy_json_button(self.data_manager.get_connected() and not is_running)
         
     def set_sample_count(self, samples_per_second):
         """
@@ -281,6 +289,31 @@ class MainWindow(QMainWindow):
         
         # Create and show the dialog
         dialog = MarkdownTableDialog(self.main_interface.rails, total_power_data, self)
+        dialog.exec_()
+    
+    def copy_data_to_json(self):
+        """
+        Create a JSON representation of the rail data and copy it to the clipboard
+        """
+        # Only allow copying if connected and not sampling
+        if not self.data_manager.get_connected():
+            QMessageBox.warning(self, Strings.MSG_COPY_ERROR_TITLE, Strings.MSG_COPY_ERROR_NOT_CONNECTED)
+            return
+            
+        if self.data_manager.get_sampling():
+            QMessageBox.warning(self, Strings.MSG_COPY_ERROR_TITLE, Strings.MSG_COPY_ERROR_SAMPLING)
+            return
+            
+        # Check if there is any data to copy
+        if self.data_manager.get_current_buffer_entries() == 0:
+            QMessageBox.warning(self, Strings.MSG_COPY_ERROR_TITLE, Strings.MSG_COPY_ERROR_EMPTY)
+            return
+            
+        # Get total power data
+        total_power_data = self.main_interface.total_power.get_data()
+        
+        # Create and show the dialog
+        dialog = JSONDialog(self.main_interface.rails, total_power_data, self)
         dialog.exec_()
     
     def _update_ui_with_zeros(self):
