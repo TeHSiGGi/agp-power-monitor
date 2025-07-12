@@ -34,6 +34,7 @@ class MainInterface(QWidget):
     reset_button_clicked = pyqtSignal()  # Signal when reset button is clicked
     export_button_clicked = pyqtSignal()  # Signal when export button is clicked
     copy_md_button_clicked = pyqtSignal()  # Signal when copy markdown button is clicked
+    copy_json_button_clicked = pyqtSignal()  # Signal when copy JSON button is clicked
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -46,6 +47,7 @@ class MainInterface(QWidget):
         self.enable_reset_button(False)
         self.enable_export_button(False)  # Export button initially disabled
         self.enable_copy_md_button(False)  # Copy MD button initially disabled
+        self.enable_copy_json_button(False)  # Copy JSON button initially disabled
         
     def init_ui(self):
         # Create layout
@@ -96,6 +98,14 @@ class MainInterface(QWidget):
         self.copy_md_button.setFixedHeight(30)
         self.copy_md_button.clicked.connect(self._on_copy_md_button_clicked)
         header_layout.addWidget(self.copy_md_button)
+        
+        # Add copy JSON button
+        self.copy_json_button = QPushButton(Strings.BUTTON_JSON)
+        self.copy_json_button.setObjectName("copyJsonButton")
+        self.copy_json_button.setFixedWidth(120)
+        self.copy_json_button.setFixedHeight(30)
+        self.copy_json_button.clicked.connect(self._on_copy_json_button_clicked)
+        header_layout.addWidget(self.copy_json_button)
         
         # Add header layout to main layout
         header_widget = QWidget()
@@ -160,6 +170,9 @@ class MainInterface(QWidget):
     def _on_copy_md_button_clicked(self):
         self.copy_md_button_clicked.emit()
     
+    def _on_copy_json_button_clicked(self):
+        self.copy_json_button_clicked.emit()
+    
     def set_sampling_status(self, is_running):
         self.is_sampling = is_running
         if is_running:
@@ -201,6 +214,14 @@ class MainInterface(QWidget):
             self.copy_md_button.setToolTip(Strings.TOOLTIP_MARKDOWN_ENABLED)
         else:
             self.copy_md_button.setToolTip(Strings.TOOLTIP_MARKDOWN_DISABLED)
+    
+    def enable_copy_json_button(self, enabled):
+        self.copy_json_button.setEnabled(enabled)
+        self.copy_json_button.setCursor(Qt.PointingHandCursor if enabled else Qt.ArrowCursor)
+        if enabled:
+            self.copy_json_button.setToolTip(Strings.TOOLTIP_JSON_ENABLED)
+        else:
+            self.copy_json_button.setToolTip(Strings.TOOLTIP_JSON_DISABLED)
         
     def _create_section(self, section_title, rail_names):
         section = QFrame()

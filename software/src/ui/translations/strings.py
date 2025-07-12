@@ -34,6 +34,7 @@ class Strings:
     BUTTON_RESET = "RESET"
     BUTTON_EXPORT = "EXPORT"
     BUTTON_MARKDOWN = "MARKDOWN"
+    BUTTON_JSON = "JSON"
     
     # Button tooltips
     TOOLTIP_START_SAMPLING = "Click to start sampling"
@@ -44,6 +45,8 @@ class Strings:
     TOOLTIP_EXPORT_DISABLED = "Export disabled until sampling is stopped"
     TOOLTIP_MARKDOWN_ENABLED = "Click to copy data as Markdown table"
     TOOLTIP_MARKDOWN_DISABLED = "Copy Markdown disabled until sampling is stopped"
+    TOOLTIP_JSON_ENABLED = "Click to copy data as JSON"
+    TOOLTIP_JSON_DISABLED = "Copy JSON disabled until sampling is stopped"
 
     # Section headings
     SECTION_HEADING_UNIT = "Unit"
@@ -80,6 +83,13 @@ class Strings:
     MARKDOWN_INCLUDE_HEADER = "Include header row"
     MARKDOWN_PREVIEW_LABEL = "The markdown table will be copied to clipboard when you click 'Copy'."
     MARKDOWN_COPY_BUTTON = "Copy"
+    
+    # JSON dialog strings
+    JSON_DIALOG_TITLE = "Copy JSON Data"
+    JSON_INSTRUCTIONS = "Select rails to include in the JSON output:"
+    JSON_RAILS_GROUP = "Rails"
+    JSON_PREVIEW_LABEL = "The JSON data will be copied to clipboard when you click 'Copy'."
+    JSON_COPY_BUTTON = "Copy"
 
     # Status bar strings
     STATUS_BAR_RUNNING = "Running"

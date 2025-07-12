@@ -11,6 +11,8 @@ A Qt-based Python application with a tabbed interface designed for monitoring po
 
 ## Setup and starting
 
+### Linux / MacOS
+
 Use the `setup.sh` shell script:
 
 `setup.sh install` to install all required libraries.
@@ -19,11 +21,22 @@ Use the `setup.sh` shell script:
 
 `setup.sh start /dev/ttyACM0` adds the serial interface to be used
 
+### Windows
+
+Use the `setup.bat` batch script:
+
+`.\setup.bat install` to install all required libraries
+
+`.\setup.bat start` to start the application
+
+`.\setup.bat start COM4` adds the serial interface to be used
+
 ## Configuration
 
 You can either modify the `config.yaml` file to meet your setup or provide overrides when running the program.
 
 Allowed flags are:
+
 - `port` - Serial port to connect to (e.g., `/dev/ttyACM0`, `COM3`)
 - `--correction-factor` or `-c` - Current correction factor
 - `--debug` or `-d` - Enable debug output
@@ -31,7 +44,8 @@ Allowed flags are:
 - `--config` - Path to a custom config.yaml file
 
 Example:
-```
+
+```sh
 ./setup.sh start /dev/ttyUSB0 --debug --baudrate 9600
 ```
 
