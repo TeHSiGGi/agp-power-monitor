@@ -376,7 +376,7 @@ class DataManager:
                 writer.writeheader()
                 
                 # Write all data entries
-                for entry in self.data_buffer:
+                for entry in list(self.data_buffer):
                     # Convert timestamp to human readable format
                     timestamp = entry['timestamp']
                     datetime_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(timestamp))
