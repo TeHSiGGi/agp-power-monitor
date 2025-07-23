@@ -77,236 +77,265 @@
     <div id="tooltip" class="tooltip"></div>
   </div>
 
-  <script>
-    async function loadJSON(url) {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return await response.json();
-      } catch (error) {
-        console.error(`Error loading ${url}: ${error.message}`);
-        return null;
+<script>
+  function showLoadingSpinner() {
+    const container = document.querySelector('.chart-container');
+    const spinner = document.createElement('div');
+    spinner.id = 'loadingSpinner';
+    spinner.style.textAlign = 'center';
+    spinner.innerHTML = '<p>Loading...</p>';
+    container.appendChild(spinner);
+  }
+
+  function hideLoadingSpinner() {
+    const spinner = document.getElementById('loadingSpinner');
+    if (spinner) spinner.remove();
+  }
+
+  function getUnit(sortAspect) {
+    return sortAspect.includes('current') ? 'A' : 'W';
+  }
+
+  function getChartTitle(sortAspect) {
+    if (sortAspect === 'totalPower') {
+      return 'GPU Total Power Consumption';
+    } else {
+      const [railName, type] = sortAspect.split('_');
+      return `GPU ${railName} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+    }
+  }
+
+  function getCompanyColor(name, company) {
+    if (company === 'ATI' || name.toLowerCase().includes('radeon')) {
+      return "#e15759";
+    }
+    else if (company === 'NVIDIA' || name.toLowerCase().includes('geforce')) {
+      return "#59a14f";
+    }
+    else {
+      return "#4a90e2";
+    }
+  }
+
+  function extractRailData(measurements, railName, type) {
+    const railValues = measurements.flatMap(m =>
+      m.rails.filter(r => r.name === railName).map(r => r[type])
+    );
+    if (railValues.length === 0) {
+      return { min: 0, max: 0, average: 0 };
+    }
+    const min = Math.min(...railValues.map(v => v.min));
+    const max = Math.max(...railValues.map(v => v.max));
+    const average = (
+      railValues.reduce((sum, v) => sum + v.average, 0) / railValues.length
+    ).toFixed(2);
+    return { min, max, average: parseFloat(average) };
+  }
+
+  async function loadJSON(url) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error(`Error loading ${url}: ${error.message}`);
+      return null;
+    }
+  }
+
+  async function loadJSONWithConcurrency(urls, concurrency = 4) {
+    const results = [];
+    let index = 0;
+
+    async function worker() {
+      while (index < urls.length) {
+        const currentIndex = index++;
+        const result = await loadJSON(urls[currentIndex]);
+        results[currentIndex] = result;
       }
     }
 
-    function extractPowerData(reference) {
-      const { name, measurements } = reference;
-      const totalPowers = measurements.map(m => m.totalPower);
-      const min = Math.min(...totalPowers.map(tp => tp.min));
-      const max = Math.max(...totalPowers.map(tp => tp.max));
-      const average = (
-        totalPowers.reduce((sum, tp) => sum + tp.average, 0) / totalPowers.length
-      ).toFixed(2);
-      return { name, min, max, average: parseFloat(average) };
+    const workers = [];
+    for (let i = 0; i < concurrency; i++) {
+      workers.push(worker());
     }
 
-    function extractRailData(measurements, railName, type) {
-      const railValues = measurements.flatMap(m =>
-        m.rails.filter(r => r.name === railName).map(r => r[type])
-      );
-      if (railValues.length === 0) {
-        return { min: 0, max: 0, average: 0 };
-      }
-      const min = Math.min(...railValues.map(v => v.min));
-      const max = Math.max(...railValues.map(v => v.max));
-      const average = (
-        railValues.reduce((sum, v) => sum + v.average, 0) / railValues.length
-      ).toFixed(2);
-      return { min, max, average: parseFloat(average) };
-    }
+    await Promise.all(workers);
+    return results;
+  }
 
-    function getUnit(sortAspect) {
-      return sortAspect.includes('current') ? 'A' : 'W';
-    }
+  async function updateChart(sortAspect) {
+    showLoadingSpinner();
+
+    document.getElementById('chartHeader').textContent = getChartTitle(sortAspect);
     
-    function getChartTitle(sortAspect) {
-      if (sortAspect === 'totalPower') {
-        return 'GPU Total Power Consumption';
-      } else {
-        const [railName, type] = sortAspect.split('_');
-        return `GPU ${railName} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
-      }
+    const list = await loadJSON('./references/list.json');
+    if (!list || !list.references) {
+      console.error('Failed to load reference list.');
+      hideLoadingSpinner();
+      return;
     }
 
-    function getCompanyColor(name, company) {
-      if (company === 'ATI' || name.toLowerCase().includes('radeon')) {
-        return "#e15759";
-      }
-      else if (company === 'NVIDIA' || name.toLowerCase().includes('geforce')) {
-        return "#59a14f";
-      }
-      else {
-        return "#4a90e2";
-      }
-    }
+    const filePaths = list.references.map(file => `./references/${file}`);
+    const references = await loadJSONWithConcurrency(filePaths, 4);
 
-    async function updateChart(sortAspect) {
-      document.getElementById('chartHeader').textContent = getChartTitle(sortAspect);
-      
-      const list = await loadJSON('./references/list.json');
-      if (!list || !list.references) {
-        console.error('Failed to load reference list.');
-        return;
-      }
+    const data = [];
 
-      const data = [];
-      for (const file of list.references) {
-        const reference = await loadJSON(`./references/${file}`);
-        if (reference) {
-          let sortData;
-          if (sortAspect === 'totalPower') {
-            const totals = reference.measurements.map(m => m.totalPower);
-            sortData = {
-              min: Math.min(...totals.map(t => t.min)),
-              max: Math.max(...totals.map(t => t.max)),
-              average: (
-                totals.reduce((sum, t) => sum + t.average, 0) / totals.length
-              ).toFixed(2),
-            };
-          } else {
-            const [railName, type] = sortAspect.split('_');
-            sortData = extractRailData(reference.measurements, railName, type);
-          }
-          const baseFilename = file.replace('.json', '');
-          data.push({ 
-            name: reference.name, 
-            filename: baseFilename,
-            company: reference.gpu?.company || '', 
-            ...sortData 
-          });
+    for (let i = 0; i < references.length; i++) {
+      const reference = references[i];
+      const file = list.references[i];
+      if (reference) {
+        let sortData;
+        if (sortAspect === 'totalPower') {
+          const totals = reference.measurements.map(m => m.totalPower);
+          sortData = {
+            min: Math.min(...totals.map(t => t.min)),
+            max: Math.max(...totals.map(t => t.max)),
+            average: (
+              totals.reduce((sum, t) => sum + t.average, 0) / totals.length
+            ).toFixed(2),
+          };
+        } else {
+          const [railName, type] = sortAspect.split('_');
+          sortData = extractRailData(reference.measurements, railName, type);
         }
-      }
-
-      data.sort((a, b) => b.average - a.average);
-
-      const unit = getUnit(sortAspect);
-      
-      const margin = { top: 20, right: 60, bottom: 40, left: 300 }; 
-      const width = 1000 - margin.left - margin.right;
-      const height = 600 - margin.top - margin.bottom;
-
-      const svg = d3.select(".chart");
-      svg.selectAll("*").remove();
-
-      const chartGroup = svg
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-      const x = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.max)])
-        .range([0, width]);
-
-      const y = d3.scaleBand()
-        .domain(data.map(d => d.name))
-        .range([0, height])
-        .padding(0.1);
-
-      chartGroup.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x).ticks(10).tickFormat(d => `${d}${unit}`));
-
-      chartGroup.append("g")
-        .call(
-          d3.axisLeft(y)
-          .tickSize(0)
-          .tickFormat('')
-        );
-        
-      chartGroup.selectAll(".y-axis-label")
-        .data(data)
-        .enter()
-        .append("a")
-        .attr("xlink:href", d => `viewer.html?target=${d.filename}`)
-        .append("text")
-        .attr("class", "y-axis-label")
-        .attr("x", -10)
-        .attr("y", d => y(d.name) + y.bandwidth() / 2)
-        .attr("dy", ".35em")
-        .attr("text-anchor", "end")
-        .style("fill", d => getCompanyColor(d.name, d.company))
-        .style("text-decoration", "underline")
-        .style("cursor", "pointer")
-        .style("font-size", "12px")
-        .text(d => d.name);
-
-      const tooltip = d3.select("#tooltip");
-      
-      chartGroup.selectAll(".range-bar")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("class", "range-bar")
-        .attr("x", d => x(d.min))
-        .attr("y", d => y(d.name))
-        .attr("width", d => x(d.max) - x(d.min))
-        .attr("height", y.bandwidth())
-        .attr("fill", "lightblue")
-        .style("opacity", 0.8)
-        .on("mouseover", function(event, d) {
-          d3.select(this)
-            .style("opacity", 1)
-            .style("stroke", "#333")
-            .style("stroke-width", 1);
-          
-          tooltip
-            .style("opacity", 1)
-            .style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 25) + "px")
-            .html(`
-              <p><strong>${d.name}</strong></p>
-              <p>Min: ${d.min}${unit}</p>
-              <p>Max: ${d.max}${unit}</p>
-              <p>Average: ${d.average}${unit}</p>
-            `);
-        })
-        .on("mousemove", function(event) {
-          tooltip
-            .style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 25) + "px");
-        })
-        .on("mouseout", function() {
-          d3.select(this)
-            .style("opacity", 0.8)
-            .style("stroke", "none");
-          
-          tooltip.style("opacity", 0);
+        const baseFilename = file.replace('.json', '');
+        data.push({ 
+          name: reference.name, 
+          filename: baseFilename,
+          company: reference.gpu?.company || '', 
+          ...sortData 
         });
-
-      chartGroup.selectAll(".average-line")
-        .data(data)
-        .enter()
-        .append("line")
-        .attr("class", "average-line")
-        .attr("x1", d => x(d.average))
-        .attr("x2", d => x(d.average))
-        .attr("y1", d => y(d.name))
-        .attr("y2", d => y(d.name) + y.bandwidth())
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 2);
-
-      chartGroup.selectAll(".label")
-        .data(data)
-        .enter()
-        .append("text")
-        .attr("class", "label")
-        .attr("x", d => x(d.average) + 45)
-        .attr("y", d => y(d.name) + y.bandwidth() / 2 + 4)
-        .attr("text-anchor", "start")
-        .text(d => `${d.average}${unit}`);
+      }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const sortAspectSelect = document.getElementById('sortAspect');
-      sortAspectSelect.addEventListener('change', () => {
-        updateChart(sortAspectSelect.value);
+    data.sort((a, b) => b.average - a.average);
+    const unit = getUnit(sortAspect);
+    const margin = { top: 20, right: 60, bottom: 40, left: 300 }; 
+    const width = 1000 - margin.left - margin.right;
+    const height = 600 - margin.top - margin.bottom;
+
+    const svg = d3.select(".chart");
+    svg.selectAll("*").remove();
+
+    const chartGroup = svg
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const x = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.max)])
+      .range([0, width]);
+
+    const y = d3.scaleBand()
+      .domain(data.map(d => d.name))
+      .range([0, height])
+      .padding(0.1);
+
+    chartGroup.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x).ticks(10).tickFormat(d => `${d}${unit}`));
+
+    chartGroup.append("g")
+      .call(d3.axisLeft(y).tickSize(0).tickFormat(''));
+
+    chartGroup.selectAll(".y-axis-label")
+      .data(data)
+      .enter()
+      .append("a")
+      .attr("xlink:href", d => `viewer.html?target=${d.filename}`)
+      .append("text")
+      .attr("class", "y-axis-label")
+      .attr("x", -10)
+      .attr("y", d => y(d.name) + y.bandwidth() / 2)
+      .attr("dy", ".35em")
+      .attr("text-anchor", "end")
+      .style("fill", d => getCompanyColor(d.name, d.company))
+      .style("text-decoration", "underline")
+      .style("cursor", "pointer")
+      .style("font-size", "12px")
+      .text(d => d.name);
+
+    const tooltip = d3.select("#tooltip");
+
+    chartGroup.selectAll(".range-bar")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("class", "range-bar")
+      .attr("x", d => x(d.min))
+      .attr("y", d => y(d.name))
+      .attr("width", d => x(d.max) - x(d.min))
+      .attr("height", y.bandwidth())
+      .attr("fill", "lightblue")
+      .style("opacity", 0.8)
+      .on("mouseover", function(event, d) {
+        d3.select(this)
+          .style("opacity", 1)
+          .style("stroke", "#333")
+          .style("stroke-width", 1);
+
+        tooltip
+          .style("opacity", 1)
+          .style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 25) + "px")
+          .html(`
+            <p><strong>${d.name}</strong></p>
+            <p>Min: ${d.min}${unit}</p>
+            <p>Max: ${d.max}${unit}</p>
+            <p>Average: ${d.average}${unit}</p>
+          `);
+      })
+      .on("mousemove", function(event) {
+        tooltip
+          .style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 25) + "px");
+      })
+      .on("mouseout", function() {
+        d3.select(this)
+          .style("opacity", 0.8)
+          .style("stroke", "none");
+
+        tooltip.style("opacity", 0);
       });
 
-      updateChart('totalPower');
+    chartGroup.selectAll(".average-line")
+      .data(data)
+      .enter()
+      .append("line")
+      .attr("class", "average-line")
+      .attr("x1", d => x(d.average))
+      .attr("x2", d => x(d.average))
+      .attr("y1", d => y(d.name))
+      .attr("y2", d => y(d.name) + y.bandwidth())
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2);
+
+    chartGroup.selectAll(".label")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("class", "label")
+      .attr("x", d => x(d.average) + 45)
+      .attr("y", d => y(d.name) + y.bandwidth() / 2 + 4)
+      .attr("text-anchor", "start")
+      .text(d => `${d.average}${unit}`);
+
+    hideLoadingSpinner();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sortAspectSelect = document.getElementById('sortAspect');
+    sortAspectSelect.addEventListener('change', () => {
+      updateChart(sortAspectSelect.value);
     });
-  </script>
+
+    updateChart('totalPower');
+  });
+</script>
+
 </body>
 </html>

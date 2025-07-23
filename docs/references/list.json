@@ -23,6 +23,9 @@
         "sapphire_radeonx1950gt_256.json",
         "sapphire_radeonx800xt_256.json",
         "asus_geforce_2gts_32.json",
-        "medion_geforce3ti200_64.json"
+        "medion_geforce3ti200_64.json",
+        "msi_mobility_radeon9600_64.json",
+        "msi_geforce_4mx4000_64.json",
+        "nvidia_quadro_fx1000_128.json"
     ]
 }
