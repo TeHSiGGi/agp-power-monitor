@@ -2,7 +2,7 @@
     "name": "NVidia Quadro FX1000",
     "modelNumber": "n/a",
     "manufacturer": "NVidia",
-    "comment": "",
+    "comment": "measured by Vogons member: Danger Manfred",
     "gpu": {
         "company": "NVIDIA",
         "name": "Quadro FX1000",

@@ -2,7 +2,7 @@
     "name": "MSI GeForce 4 MX 4000 64MB",
     "modelNumber": "MX4000-T64",
     "manufacturer": "MSI",
-    "comment": "passive cooler, low profile, only 32bits",
+    "comment": "passive cooler, low profile, only 32bits, measured by Vogons member: Danger Manfred",
     "gpu": {
         "company": "NVIDIA",
         "name": "GeForce 4 MX 4000",
