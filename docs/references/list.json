@@ -26,6 +26,7 @@
         "medion_geforce3ti200_64.json",
         "msi_mobility_radeon9600_64.json",
         "msi_geforce_4mx4000_64.json",
-        "nvidia_quadro_fx1000_128.json"
+        "nvidia_quadro_fx1000_128.json",
+        "ati_radeon9700_128.json"
     ]
 }
