@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GPU Measurements</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: sans-serif; padding: 1em; background: #f9f9f9; }
     .header-nav { display: flex; align-items: center; margin-bottom: 1em; }
@@ -25,6 +26,9 @@
     .info-group { flex: 1 1 300px; background: #fff; padding: 1em; border: 1px solid #ccc; border-radius: 4px; }
     .info-group h3 { margin-bottom: 0.5em; }
     .comment-box, .summary-box { background: #fff; padding: 1em; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 1em; }
+    .charts-container { display: flex; flex-wrap: wrap; gap: 1em; margin-bottom: 1em; }
+    .chart-box { flex: 1; min-width: 300px; background: #fff; padding: 1em; border: 1px solid #ccc; border-radius: 4px; }
+    .chart-wrapper { position: relative; height: 300px; }
   </style>
 </head>
 <body>
@@ -34,6 +38,29 @@
   <div id="generalInfo" class="info-wrapper"></div>
   <div id="gpuComment"></div>
   <div id="summaryBox"></div>
+  <div id="powerDistributionCharts">
+    <h3>Power Distribution Charts</h3>
+    <div class="charts-container">
+      <div class="chart-box">
+        <h4>Min Power Distribution (over all benchmarks)</h4>
+        <div class="chart-wrapper">
+          <canvas id="minPowerChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <h4>Average Power Distribution (over all benchmarks)</h4>
+        <div class="chart-wrapper">
+          <canvas id="avgPowerChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <h4>Max Power Distribution (over all benchmarks)</h4>
+        <div class="chart-wrapper">
+          <canvas id="maxPowerChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
   <h2>Measurements</h2>
   <div id="measurements"></div>
 
@@ -121,6 +148,95 @@
         <p><strong>Avg:</strong> ${avg} W &nbsp; <strong>Min:</strong> ${min} W &nbsp; <strong>Max:</strong> ${max} W</p>
       </div>
     `;
+
+    // Create power distribution pie charts
+    function createPowerDistributionCharts() {
+      // Use the first measurement set as reference for rail names
+      const referenceData = data.measurements[0];
+      
+      // Extract rail names and prepare data arrays for min, avg, and max
+      const railNames = referenceData.rails.map(rail => rail.name);
+      
+      // Combine data from all measurements for best representation
+      const minPowerData = [];
+      const avgPowerData = [];
+      const maxPowerData = [];
+      
+      // Calculate average min, avg, and max values for each rail across all measurements
+      railNames.forEach((railName) => {
+        // For each rail name, find the matching rail in each measurement by name
+        const railData = data.measurements.map(m => {
+          // Find the rail with matching name
+          const rail = m.rails.find(r => r.name === railName);
+          return rail ? rail.power : { min: 0, average: 0, max: 0 };
+        });
+        
+        // Calculate average of min values for this rail
+        const avgMinPower = railData.reduce((sum, power) => sum + power.min, 0) / data.measurements.length;
+        minPowerData.push(avgMinPower);
+        
+        // Calculate average of average values for this rail
+        const avgAvgPower = railData.reduce((sum, power) => sum + power.average, 0) / data.measurements.length;
+        avgPowerData.push(avgAvgPower);
+        
+        // Calculate average of max values for this rail
+        const avgMaxPower = railData.reduce((sum, power) => sum + power.max, 0) / data.measurements.length;
+        maxPowerData.push(avgMaxPower);
+      });
+
+      // Generate vibrant colors for the chart segments
+      const colors = railNames.map((_, i) => {
+        const hue = (i * 137.5) % 360; // Golden angle approximation for good color distribution
+        return `hsl(${hue}, 65%, 60%)`;
+      });
+      
+      // Create the charts
+      createPieChart('minPowerChart', railNames, minPowerData, colors, 'Min Power Distribution (over all benchmarks)');
+      createPieChart('avgPowerChart', railNames, avgPowerData, colors, 'Average Power Distribution (over all benchmarks)');
+      createPieChart('maxPowerChart', railNames, maxPowerData, colors, 'Max Power Distribution (over all benchmarks)');
+    }
+    
+    function createPieChart(canvasId, labels, data, colors, title) {
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: colors,
+            borderColor: colors.map(() => '#fff'),
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                boxWidth: 15
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.formattedValue;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = Math.round((context.raw / total) * 100);
+                  return `${label}: ${value}W (${percentage}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    // Call the function to create power distribution charts
+    createPowerDistributionCharts();
 
     data.measurements.forEach(measurement => {
       const section = document.createElement('div');
