@@ -14,7 +14,7 @@
             "2D": 325,
             "3D": 325
         },
-        "organization": "8 ROPS, 8 TMUs, 48 Pixel Pipelines, 4 Vertex Shaders"
+        "organization": "8 ROPS, 8 TMUs, 8 Pixel Pipelines, 4 Vertex Shaders"
     },
     "memory": {
         "type": "DDR",

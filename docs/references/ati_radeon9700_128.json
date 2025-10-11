@@ -2,7 +2,7 @@
     "name": "ATI Radeon 9700 128MB",
     "modelNumber": "n/a",
     "manufacturer": "n/a",
-    "comment": "Using arctic silencer",
+    "comment": "Using stock cooler",
     "gpu": {
         "company": "ATI",
         "name": "Radeon 9700 Pro",
@@ -14,7 +14,7 @@
             "2D": 277,
             "3D": 277
         },
-        "organization": "8 ROPS, 8 TMUs, 48 Pixel Pipelines, 4 Vertex Shaders"
+        "organization": "8 ROPS, 8 TMUs, 8 Pixel Pipelines, 4 Vertex Shaders"
     },
     "memory": {
         "type": "DDR",
